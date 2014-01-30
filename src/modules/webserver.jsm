@@ -124,6 +124,7 @@ function guessContentType(data) {
 
 function HttpRequest(request) {
     this._request = request;
+    this._url;
 
     let BinaryInputStream = Components.Constructor(
          "@mozilla.org/binaryinputstream;1",
@@ -145,10 +146,15 @@ HttpRequest.prototype = {
         return this._request.method;
     },
     get url () {
-        let u = this._request.path;
-        if (this._request.queryString != '')
-            u += '?'+this._request.queryString;
-        return u;
+        if (this._url == undefined) {
+            this._url = this._request.path;
+            if (this._request.queryString != '')
+                this._url += '?'+this._request.queryString;
+        }
+        return this._url;
+    },
+    set url (val){
+        this._url = val;
     },
     get httpVersion() {
         return this._request.httpVersion;
