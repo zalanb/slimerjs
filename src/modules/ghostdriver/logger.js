@@ -92,15 +92,14 @@ exports.create = function (context) {
 exports.addLogFile = function(logFileName) {
     var fs = require("fs"),
         f = fs.open(fs.absolute(logFileName), 'a');
+    var os = require("system").os.name,
+        eol = (os == "darwin" ? "\r" : (os == "linux" ? "\n" : "\r\n"));
 
     // Append line to Log File
     console.onOutput(function(msg, levelName) {
-        f.writeLine(msg);
+        f.write(msg + eol);
         f.flush();
     });
-
-    // Flush the Log File when process exits
-    phantom.aboutToExit.connect(f.flush);
 };
 
 /**
