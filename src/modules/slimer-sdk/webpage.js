@@ -55,7 +55,7 @@ function _create(parentWebpageInfo) {
     /**
      * library path
      */
-    var libPath = (slConfiguration.scriptFile ? slConfiguration.scriptFile.parent.clone(): null);
+    var libPath = phantom.libraryPath;
 
     /**
      * utility function to create a sandbox when executing a

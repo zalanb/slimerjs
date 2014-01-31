@@ -12,7 +12,10 @@ Components.utils.import('resource://slimerjs/slCookiesManager.jsm');
 
 
 
-var libPath = (slConfiguration.scriptFile ? slConfiguration.scriptFile.parent.clone(): null);
+var libPath = (slConfiguration.scriptFile ? slConfiguration.scriptFile.parent.clone() : null);
+if (!libPath && slConfiguration.mainScriptURI) {
+  libPath = slConfiguration.mainScriptURI.QueryInterface(Components.interfaces.nsIFileURL).file.parent;
+}
 
 var errorHandler;
 
